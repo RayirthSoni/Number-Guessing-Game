@@ -2,6 +2,9 @@
 Script contains configs
 """
 
+# Ignore pylint warnings
+# pylint: disable=line-too-long
+
 import os
 
 
