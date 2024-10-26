@@ -14,3 +14,4 @@ class Configs:
     """
 
     DIFFICULTY = os.environ.get("DIFFICULTY", "medium")
+    GUESSES_AVAILABLE = os.environ.get("GUESSES_AVAILABLE", 100)
