@@ -13,4 +13,4 @@ class Configs:
     Game configs
     """
 
-    difficulty = os.environ.get("DIFFICULTY", "medium")
+    DIFFICULTY = os.environ.get("DIFFICULTY", "medium")

@@ -3,24 +3,27 @@ Script for playing the game
 """
 
 from utils.logger import logger
-import os
 from configs.constants import Constants
 from configs.configs import Configs
 import random
 
 
+DIFFICULTY = Configs.DIFFICULTY
+NUMBER_RANGE = Constants.Difficulty.NUMBER_RANGE.get(DIFFICULTY)
+LOWER_NUMBER = NUMBER_RANGE[0]
+HIGHER_NUMBER = NUMBER_RANGE[1]
+
 def play_game():
     """
     Function to play the game
     """
-    print(Configs.difficulty)
 
     logger.info("Let's play the game!")
-    logger.info("I'm thinking of a number between 1 and 100.")
-    secret_number = random.randint(1, 100)
+    logger.info("I'm thinking of a number between %s and %s.",LOWER_NUMBER, HIGHER_NUMBER)
+
+    secret_number = random.randint(LOWER_NUMBER, HIGHER_NUMBER)
     logger.info("Can you guess it?")
 
-    # Initialize the guess count
     guess_count = 0
 
     # Loop until the user guesses the correct number

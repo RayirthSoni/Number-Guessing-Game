@@ -13,6 +13,5 @@ class Constants:
         Difficulty configurations
         """
 
-        possible_difficulties = ["easy", "medium", "hard"]
-        default_difficulty = "medium"
-        number_range = {"easy": (1, 10), "medium": (1, 100), "hard": (1, 1000)}
+        POSSIBLE_DIFFICULTIES = ["easy", "medium", "hard"]
+        NUMBER_RANGE = {"easy": (1, 10), "medium": (1, 100), "hard": (1, 1000)}
