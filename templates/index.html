@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Guess the Number!</h1>
+        <div id="settings">
+            <p>Select your difficulty level:</p>
+            <select id="difficulty">
+                <option value="easy">Easy (1-10)</option>
+                <option value="medium" selected>Medium (1-100)</option>
+                <option value="hard">Hard (1-1000)</option>
+            </select>
+            <p>Enter the number of guesses:</p>
+            <input type="number" id="guessCount" placeholder="100" min="1" max="1000" />
+            <button onclick="startGame()">Start Game</button>
+        </div>
+        <div id="game-content" style="display: none;">
+            <p id="rangeMessage"></p>
+            <input type="number" id="guessInput" placeholder="Enter your guess" />
+            <button onclick="makeGuess()">Guess</button>
+            <p id="message"></p>
+            <p id="remainingGuesses"></p>
+        </div>
+    </div>
+
+    <script>
+        async function startGame() {
+            const difficulty = document.getElementById("difficulty").value;
+            const guesses = document.getElementById("guessCount").value || 100;
+
+            const response = await fetch("/start", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ difficulty: difficulty, guesses: guesses })
+            });
+
+            const data = await response.json();
+            document.getElementById("settings").style.display = "none";
+            document.getElementById("game-content").style.display = "block";
+            document.getElementById("rangeMessage").textContent = data.message;
+            document.getElementById("message").textContent = "";
+            document.getElementById("remainingGuesses").textContent = `Guesses left: ${data.guesses_left}`;
+        }
+
+        async function makeGuess() {
+            const guess = document.getElementById("guessInput").value;
+            const response = await fetch("/guess", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ guess: parseInt(guess) })
+            });
+
+            const data = await response.json();
+            document.getElementById("message").textContent = data.message;
+            document.getElementById("remainingGuesses").textContent = `Guesses left: ${data.guesses_left}`;
+
+            if (data.guesses_left === 0) {
+                document.getElementById("guessInput").disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>
